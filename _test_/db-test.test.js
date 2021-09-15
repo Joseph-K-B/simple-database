@@ -1,18 +1,24 @@
 import { rm, mkdir } from 'fs/promises';
-import { SimpleDatabase } from '../store/x.js';
+import { SimpleDb } from '../store/simpleDb.js';
 
 describe('x', () => {
-  const main = '../store/simpleDb.js';
+  const rootDir = '../store/simpleDb';
 
   beforeEach(() => {
-    return rm(main, { force: true, recursive: true }).then(() => {
-      return mkdir(main, { recursive: true });
+    return rm(rootDir, { force: true, recursive: true }).then(() => {
+      return mkdir(rootDir, { recursive: true });
     });
   });
 
-  it('it generates new folder in database', () => {
-    const newDb = new SimpleDatabase(main);
+  it('it checks saved object for id', () => {
+    const findId = new findId(rootDir);
+    const Martin = {
+      instrument: 'guitar',
+      type: 'acoustic',
+    };
     
-    return newDb;
+    return findId.save(Martin).then(() => {
+      expect(Martin.id).toEqual(expect.any(String));
+    });
   });
 });
