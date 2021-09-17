@@ -40,6 +40,18 @@ describe('SimpleDb', () => {
         expect(newFile.id).toEqual(Martin.id);
       });
   });
+  
+  it('returns null when id isnt present', () => {
+    const Yamaha = new SimpleDb(rootDir);
+
+    return Yamaha
+      .get(867)
+      .then((ghost) => {
+        expect(ghost).toBe(null);
+      });
+  });
+
+  
 });
 
 
