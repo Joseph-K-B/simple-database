@@ -11,32 +11,39 @@ describe('SimpleDb', () => {
   });
 
   it('it checks new object for id', () => {
-    const findId = new SimpleDb(rootDir);
+    const file = new SimpleDb(rootDir);
     const Martin = {
       instrument: 'guitar',
       type: 'acoustic',
     };
     
-    return findId.save(Martin).then(() => {
-      expect(Martin.id).toEqual(expect.any(String));
-    });
+    return file
+      .save(Martin)
+      .then(() => {
+        expect(Martin.id).toEqual(expect.any(String));
+      });
   });
 
-  // it('it saves new object and gets it from database', () => {
-  //   const saveObject = new SavedObject(rootDir);
-  //   const getObject = new GetObject(id);
-  //   const Martin = {
-  //     instrument: 'guitar',
-  //     type: 'acoustic',
-  //   };
-  //   return saveObject
-  //     .save(Martin)
-  //     .then(() => {
-  //       return getObject.get();
-  //     })
-  //     .then((res) => {
-  //       expect(res).toEqual(Martin);
-  //     });
-  // });
+  it('it saves new object and gets it from database', () => {
+    const file = new SimpleDb;
+  
+    const Martin = {
+      instrument: 'guitar',
+      type: 'acoustic',
+      
+    };
+    return file
+      .save(Martin)
+      .then(() => { 
+        return file.get(Martin.id);
+      })
+      .then((newFile) => {
+        expect(newFile.id).toEqual(Martin.id);
+      });
+  });
 });
+
+
+        
+      
 
