@@ -25,8 +25,7 @@ describe('SimpleDb', () => {
   });
 
   it('it saves new object and gets it from database', () => {
-    const file = new SimpleDb;
-  
+    const file = new SimpleDb(rootDir);  
     const Martin = {
       instrument: 'guitar',
       type: 'acoustic',

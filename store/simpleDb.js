@@ -5,22 +5,28 @@ import shortid from 'shortid';
 export class SimpleDb {
   constructor(rootDir){
     this.fileId = shortid.generate();
-    const newFile = `${this.fileId}.json`;
-    this.file = path.join(rootDir, newFile);
+    this.rootDir = rootDir;
+    // const newFile = `${this.fileId}.json`;
   }
-
+  
   save(obj) {
     obj.id = this.fileId;
-    const data = JSON.stringify(obj);
-    return writeFile(this.file, data);
+    const data = `File-${obj.id}.json`;
+    this.file = path.join(this.rootDir, data);
+    return writeFile(this.file, JSON.stringify(obj));
   }
 
-  get() {
-    // const name = this.file;
-    readFile(this.file, 'utf-8').then((res) => {
-      return JSON.parse(res);
-    }).catch(() => {
-      return null;
-    });
+  get(id) {
+    const name = `File-${id}.json`;
+    this.file = path.join(this.rootDir, name);
+    return readFile(this.file, 'utf-8')
+      .then((res) => {
+        return JSON.parse(res);
+      }).catch((err) => {
+        if (err)  {return null;
+        }
+        throw err;
+      });
   }
 }
+
