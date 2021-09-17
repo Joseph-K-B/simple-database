@@ -4,7 +4,15 @@ import shortid from 'shortid';
 
 export class SimpleDb {
   constructor(rootDir){
-    const name = `${shortid.generate()}.txt`;
-    this.newFile = path.join(rootDir, name);
+    const newFile = `${this.fileId}.json`;
+    this.fileId = shortid.generate();
+    this.file = path.join(rootDir, newFile);
+  }
+
+  save(obj) {
+    obj.id = this.fileId;
+    const data = JSON.stringify(obj);
+    return writeFile(this.file, data);
+   
   }
 }
