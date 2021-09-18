@@ -18,7 +18,6 @@ describe('SimpleDb', () => {
       .save(Martin)
       .then(() => {
         expect(Martin.id).toEqual(expect.any(String));
-        console.log(Martin.id);
       });
   });
 
