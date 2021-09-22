@@ -2,7 +2,7 @@ import { rm, mkdir } from 'fs/promises';
 import { SimpleDb } from '../simpleDb.js';
 
 describe('SimpleDb', () => {
-  const store = './store';
+  const store = '../store';
   
   beforeEach(() => {
     return rm(store, { recursive: true, force: true }).then(() => {
