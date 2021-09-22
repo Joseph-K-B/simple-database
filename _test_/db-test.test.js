@@ -1,14 +1,14 @@
-// import { rm, mkdir } from 'fs/promises';
+import { rm, mkdir } from 'fs/promises';
 import { SimpleDb } from '../simpleDb.js';
 
 describe('SimpleDb', () => {
   const store = './store';
   
-  // beforeEach(() => {
-  //   return rm(store, { recursive: true, force: true }).then(() => {
-  //     return mkdir(store, { recursive: true });
-  //   });
-  // });
+  beforeEach(() => {
+    return rm(store, { recursive: true, force: true }).then(() => {
+      return mkdir(store);
+    });
+  });
 
   it('it checks new object for id', () => {
     const file = new SimpleDb(store);
@@ -44,24 +44,46 @@ describe('SimpleDb', () => {
       });
   });
 
-  it('returns objects from directory', () => {
-    const main = './store';
-    const files = new SimpleDb(main);
-    return files.getAll()
-      .then((files) => {
-        expect(files).toEqual([
-          { instrument: 'guitar', 
-            id: expect.any(String) 
-          },
-          { instrument: 'guitar', 
-            id: expect.any(String) 
-          }
-        ]);
-      });
+  it('returns objects from directory', async () => {
+    // const main = './store';
+    const files = new SimpleDb(store);
+    const Taylor = { instrument: 'guitar' };
+    const Yamaha = { instrument: 'piano' };
+    const testArr = [Taylor, Yamaha];
+    await Promise.all(
+      testArr.map((testMap) => {
+        return files.save(testMap);
+      })
+    );
+    return files.getAll().then((pulledFiles) => {
+      expect(pulledFiles).toEqual([
+        { instrument: 'guitar', 
+          id: expect.any(String) 
+        },
+        { instrument: 'guitar', 
+          id: expect.any(String) 
+        }
+      ]);
+    });
+    // return files
+    //   .save(Taylor)
+    //   .then(async () => {
+    //     await files.save(Yamaha)
+    //       .then(() => {
+    //         return files.getAll();
+    //       });
+    //     // .then((files) => {
+    //     expect(files).toEqual([
+    //       { instrument: 'guitar', 
+    //         id: expect.any(String) 
+    //       },
+    //       { instrument: 'guitar', 
+    //         id: expect.any(String) 
+    //       }
+    //     ]);
+    //   });
   });
 });
-
-
-        
+// });   
       
 
