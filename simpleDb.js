@@ -5,7 +5,6 @@ import shortid from 'shortid';
 export class SimpleDb {
   constructor(store){
     this.store = store;
-    // const newFile = `${this.fileId}.json`;
   }
 
   getPath(id) {
@@ -14,10 +13,8 @@ export class SimpleDb {
   
   save(obj) {
     obj.id = shortid.generate();
-    // obj.id = this.fileId;
-    const data = `${obj.id}.json`;
-    this.file = path.join(this.store, data);
-    return writeFile(this.getPath(obj.id), JSON.stringify(obj))
+    const getPath = this.getPath(obj.id);
+    return writeFile(getPath, JSON.stringify(obj))
       .then(() => {
         return obj.id;
       });
@@ -40,13 +37,13 @@ export class SimpleDb {
       .then((files) => {
         return Promise.all(
           files.map((file) => {
-            console.log(files);
+            // console.log(files);
             return path.join(this.store, file);
           })
         ).then ((obj) => {
           return Promise.all(
             obj.map((fileId) => {
-              return readFile(obj, 'utf-8')
+              return readFile(fileId, 'utf-8')
                 .then((res) => { 
                   return JSON.parse(res);
                 });
@@ -56,32 +53,5 @@ export class SimpleDb {
       }); 
   }
 }
-
-// .catch((err) => {
-//   if (err)  {return null;
-//   }
-//   throw err;
-// });
-//   getAll() {
-//     const src = './store';
-//     return readdir(src)
-//       .then((files) => {
-//         return Promise.all(
-//           files.map((file) => {
-//             return path.join(src, file);
-//           })
-//         )
-//           .then((target) => {
-//             return Promise.all(
-//               target.map(x => {
-//                 return readFile(x, 'utf-8')
-//                   .then(parseFile => JSON.parse(parseFile));
-//               })
-//             );
-//           });
-//       });
-//   }
-// }
-
 
 

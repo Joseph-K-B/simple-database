@@ -56,34 +56,10 @@ describe('SimpleDb', () => {
       })
     );
     return files.getAll().then((pulledFiles) => {
-      expect(pulledFiles).toEqual([
-        { instrument: 'guitar', 
-          id: expect.any(String) 
-        },
-        { instrument: 'guitar', 
-          id: expect.any(String) 
-        }
-      ]);
+      expect(pulledFiles).toEqual(expect.arrayContaining([Taylor, Yamaha]));
     });
-    // return files
-    //   .save(Taylor)
-    //   .then(async () => {
-    //     await files.save(Yamaha)
-    //       .then(() => {
-    //         return files.getAll();
-    //       });
-    //     // .then((files) => {
-    //     expect(files).toEqual([
-    //       { instrument: 'guitar', 
-    //         id: expect.any(String) 
-    //       },
-    //       { instrument: 'guitar', 
-    //         id: expect.any(String) 
-    //       }
-    //     ]);
-    //   });
   });
 });
-// });   
+  
       
 
